@@ -221,11 +221,10 @@ def get_augmented_results(image, bboxes):
     """
     # Define the augmentations
     transform = A.Compose([
-        A.RandomCrop(width=300, height=300),
-        A.HorizontalFlip(p=0.5),
-        A.RandomBrightnessContrast(brightness_limit=0.2, contrast_limit=0),
-        A.CLAHE(clip_limit=(0, 1), tile_grid_size=(8, 8), always_apply=True),
-        A.Resize(300, 300)
+        A.OneOf([
+            A.HorizontalFlip(p=1.0),
+            A.VerticalFlip(p=1.0)
+        ], p=1.0)
     ], bbox_params=A.BboxParams(format='yolo'))
 
     # Apply the augmentations
